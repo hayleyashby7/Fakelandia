@@ -1,11 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Router from './router';
-import { BrowserRouter } from 'react-router-dom';
+import { renderWithRouter } from '../../utils/testUtils';
 
 test('Router defaults to homepage', () => {
 	//Arrange
-	render(<Router />, { wrapper: BrowserRouter });
+	renderWithRouter(<Router />);
 
 	//Act
 	const homeElement = screen.getByText(/Home/i);
