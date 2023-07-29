@@ -4,17 +4,17 @@ const Nav = () => (
 	<nav className='flex flex-grow items-center w-full'>
 		<ul className='flex flex-row justify-evenly w-full'>
 			<li>
-				<NavLink className='text-gold' to='/'>
+				<NavLink to='/' className={({ isActive }) => (isActive ? 'text-white' : 'text-gold')}>
 					Home
 				</NavLink>
 			</li>
 			<li>
-				<NavLink className='text-gold' to='/misdemeanours'>
+				<NavLink to='/misdemeanours' className={({ isActive }) => (isActive ? 'text-white' : 'text-gold')}>
 					Misdemeanours
 				</NavLink>
 			</li>
 			<li>
-				<NavLink className='text-gold' to='/confession'>
+				<NavLink to='/confession' className={({ isActive }) => (isActive ? 'text-white' : 'text-gold')}>
 					Confess To Us
 				</NavLink>
 			</li>
