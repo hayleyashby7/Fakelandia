@@ -8,11 +8,12 @@ import NotFound from '../not_found/not_found';
 export const Router: React.FC = () => {
 	return (
 		<Routes>
-			<Route path='/' element={<MainLayout />} />
-			<Route index element={<Home />} />
-			<Route path='confession' element={<Confession />} />
-			<Route path='misdemeanours' element={<Misdemeanour />} />
-			<Route path='*' element={<NotFound />} />
+			<Route path='/' element={<MainLayout />}>
+				<Route index element={<Home />} />
+				<Route path='confession' element={<Confession />} />
+				<Route path='misdemeanours' element={<Misdemeanour />} />
+				<Route path='*' element={<NotFound />} />
+			</Route>
 		</Routes>
 	);
 };
