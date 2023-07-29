@@ -12,7 +12,7 @@ test('Router defaults to homepage', () => {
 
 	//Assert
 	expect(homeElement).toBeInTheDocument();
-	expect(homeElement).toHaveTextContent('Home');
+	expect(homeElement.textContent).toContain('Welcome');
 });
 
 test('Router renders confession page', () => {

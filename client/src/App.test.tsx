@@ -10,8 +10,9 @@ test('App rendered and default to homepage', () => {
 	const homeElement = screen.getByRole('main');
 
 	//Assert
+	//Assert
 	expect(homeElement).toBeInTheDocument();
-	expect(homeElement).toHaveTextContent('Home');
+	expect(homeElement.textContent).toContain('Welcome');
 });
 
 test('App renders with a header containing title and links', () => {
