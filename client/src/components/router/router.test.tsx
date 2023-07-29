@@ -38,3 +38,18 @@ test('Router renders misdemeanor page', () => {
 	expect(misdemeanorElement).toBeInTheDocument();
 	expect(misdemeanorElement).toHaveTextContent('Misdemeanour');
 });
+
+test('Router renders not found page', () => {
+	//Arrange
+	renderWithRouter(<Router />, { route: '/bad-link' });
+
+	//Act
+	const notFoundHeading = screen.getByRole('heading');
+	const notFoundText = screen.getByText(/Sorry/i);
+
+	//Assert
+	expect(notFoundHeading).toBeInTheDocument();
+	expect(notFoundHeading).toHaveTextContent('404 - Not Found!');
+	expect(notFoundText).toBeInTheDocument();
+	expect(notFoundText).toHaveTextContent('Sorry, the page you are looking for does not exist.');
+});
