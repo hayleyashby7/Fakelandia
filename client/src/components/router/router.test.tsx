@@ -14,3 +14,15 @@ test('Router defaults to homepage', () => {
 	expect(homeElement).toBeInTheDocument();
 	expect(homeElement).toHaveTextContent('Home');
 });
+
+test('Router renders confession page', () => {
+	//Arrange
+	renderWithRouter(<Router />, { route: '/confession' });
+
+	//Act
+	const confessionElement = screen.getByText(/Confession/i);
+
+	//Assert
+	expect(confessionElement).toBeInTheDocument();
+	expect(confessionElement).toHaveTextContent('Confession');
+});
