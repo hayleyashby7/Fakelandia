@@ -3,9 +3,9 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 
 export const MainLayout = () => (
-	<div className='main'>
+	<div className='flex flex-col min-h-screen'>
 		<Header />
-		<main className='p-6 main__content'>
+		<main className='p-6 flex-1'>
 			<Outlet />
 		</main>
 		<Footer />
