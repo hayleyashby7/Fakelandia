@@ -29,7 +29,7 @@ test('Router renders confession page', () => {
 
 test('Router renders misdemeanor page', () => {
 	//Arrange
-	renderWithRouter(<Router />, { route: '/misdemeanour' });
+	renderWithRouter(<Router />, { route: '/misdemeanours' });
 
 	//Act
 	const misdemeanorElement = screen.getByText(/Misdemeanour/i);
