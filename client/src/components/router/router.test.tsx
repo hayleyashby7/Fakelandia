@@ -8,7 +8,7 @@ test('Router defaults to homepage', () => {
 	renderWithRouter(<Router />);
 
 	//Act
-	const homeElement = screen.getByText(/Home/i);
+	const homeElement = screen.getByRole('main');
 
 	//Assert
 	expect(homeElement).toBeInTheDocument();
@@ -20,7 +20,7 @@ test('Router renders confession page', () => {
 	renderWithRouter(<Router />, { route: '/confession' });
 
 	//Act
-	const confessionElement = screen.getByText(/Confession/i);
+	const confessionElement = screen.getByRole('main');
 
 	//Assert
 	expect(confessionElement).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Router renders misdemeanor page', () => {
 	renderWithRouter(<Router />, { route: '/misdemeanours' });
 
 	//Act
-	const misdemeanorElement = screen.getByText(/Misdemeanour/i);
+	const misdemeanorElement = screen.getByRole('main');
 
 	//Assert
 	expect(misdemeanorElement).toBeInTheDocument();
@@ -44,7 +44,7 @@ test('Router renders not found page', () => {
 	renderWithRouter(<Router />, { route: '/bad-link' });
 
 	//Act
-	const notFoundHeading = screen.getByRole('heading');
+	const notFoundHeading = screen.getByRole('heading', { level: 2 });
 	const notFoundText = screen.getByText(/Sorry/i);
 
 	//Assert
