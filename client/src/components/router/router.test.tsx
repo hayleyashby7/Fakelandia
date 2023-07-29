@@ -26,3 +26,15 @@ test('Router renders confession page', () => {
 	expect(confessionElement).toBeInTheDocument();
 	expect(confessionElement).toHaveTextContent('Confession');
 });
+
+test('Router renders misdemeanor page', () => {
+	//Arrange
+	renderWithRouter(<Router />, { route: '/misdemeanour' });
+
+	//Act
+	const misdemeanorElement = screen.getByText(/Misdemeanour/i);
+
+	//Assert
+	expect(misdemeanorElement).toBeInTheDocument();
+	expect(misdemeanorElement).toHaveTextContent('Misdemeanour');
+});
