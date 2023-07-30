@@ -38,4 +38,4 @@ You should see a message:
 
 You should then be able to access the default application by opening the browser and visiting
 
-[http://localhost:5134]
+`http://localhost:5134`
