@@ -27,16 +27,16 @@ test('Router renders confession page', () => {
 	expect(confessionElement).toHaveTextContent('Confession');
 });
 
-test('Router renders misdemeanor page', () => {
+test('Router renders misdemeanor page', async () => {
 	//Arrange
 	renderWithRouter(<Router />, { route: '/misdemeanours' });
 
 	//Act
-	const misdemeanorElement = screen.getByRole('main');
+	const misdemeanorElement = await screen.findByRole('main');
 
 	//Assert
 	expect(misdemeanorElement).toBeInTheDocument();
-	expect(misdemeanorElement).toHaveTextContent('Misdemeanour');
+	expect(misdemeanorElement).toHaveTextContent('No misdemeanours');
 });
 
 test('Router renders not found page', () => {
