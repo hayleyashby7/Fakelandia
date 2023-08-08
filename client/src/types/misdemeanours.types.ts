@@ -13,10 +13,12 @@ export enum MISDEMEANOUR_EMOJIS {
 
 export type MisdemeanourEmoji = (typeof MISDEMEANOUR_EMOJIS)[MisdemeanourKind];
 
-export type MisdemeanourAndEmoji = MisdemeanourKind & MisdemeanourEmoji;
-
 export type Misdemeanour = {
 	citizenId: number;
-	misdemeanour: MisdemeanourKind | MisdemeanourAndEmoji;
+	misdemeanour: MisdemeanourKind;
 	date: string; // we'll stringify this for easy sending via HTTP rather than storing the full Date object
 };
+
+export interface MisdemeanourWithEmoji extends Misdemeanour {
+	misdemeanourWithEmoji: string;
+}

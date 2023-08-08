@@ -1,11 +1,11 @@
 import { useReactTable, createColumnHelper, flexRender, getCoreRowModel } from '@tanstack/react-table';
-import { Misdemeanour } from '../../types/misdemeanours.types';
+import { MisdemeanourWithEmoji } from '../../types/misdemeanours.types';
 
 interface TableProps {
-	data: Misdemeanour[];
+	data: MisdemeanourWithEmoji[];
 }
 
-const columnHelper = createColumnHelper<Misdemeanour>();
+const columnHelper = createColumnHelper<MisdemeanourWithEmoji>();
 
 const columns = [
 	columnHelper.accessor('citizenId', {
@@ -16,16 +16,18 @@ const columns = [
 		header: 'Date',
 		cell: (info) => info.getValue(),
 	}),
-	columnHelper.accessor('misdemeanour', {
+	columnHelper.accessor('misdemeanourWithEmoji', {
 		header: 'Misdemeanour',
 		cell: (info) => info.getValue(),
 	}),
 ];
 
 export const Table: React.FC<TableProps> = ({ data }) => {
-	const table = useReactTable<Misdemeanour>({
+	const table = useReactTable({
 		data,
 		columns,
+		enableFilters: true,
+		enableColumnFilters: true,
 		getCoreRowModel: getCoreRowModel(),
 	});
 
