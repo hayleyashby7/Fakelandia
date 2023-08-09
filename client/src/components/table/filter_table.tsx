@@ -1,9 +1,10 @@
-import { MisdemeanourKind, MISDEMEANOURS, MisdemeanourWithEmoji } from '../../types/misdemeanours.types';
+import { MisdemeanourKind, MISDEMEANOURS } from '../../types/misdemeanours.types';
+import { MisdemeanourTableRow } from '../misdemeanour/misdemanour_list';
 import Table from './table';
 import { useState } from 'react';
 
 interface Filter_TableProps {
-	data: MisdemeanourWithEmoji[];
+	data: MisdemeanourTableRow[];
 }
 
 export const Filter_Table: React.FC<Filter_TableProps> = ({ data }) => {
