@@ -22,8 +22,8 @@ const columns = [
 		cell: (info) => info.getValue(),
 	}),
 	columnHelper.accessor('punishment', {
-		header: 'Punishment', 
-		cell: (info) => {	
+		header: 'Punishment',
+		cell: (info) => {
 			return <img src={info.row.original.punishment} alt='punishment' />;
 		},
 	}),
@@ -40,12 +40,12 @@ export const Table: React.FC<TableProps> = ({ data }) => {
 
 	return (
 		<div>
-			<table className='shadow-lg bg-white'>
-				<thead>
+			<table className='shadow-none md:shadow-lg bg-white border-collapse w-full my-4 mx-0'>
+				<thead className='hidden sm:table-header-group'>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr key={headerGroup.id}>
 							{headerGroup.headers.map((header) => (
-								<th className='bg-red text-white text-left border px-8 py-4' key={header.id}>
+								<th className='bg-red text-white text-left' key={header.id}>
 									{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
 								</th>
 							))}
@@ -56,7 +56,9 @@ export const Table: React.FC<TableProps> = ({ data }) => {
 					{table.getRowModel().rows.map((row) => (
 						<tr key={row.id}>
 							{row.getVisibleCells().map((cell) => (
-								<td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+								<td className='text-left' key={cell.id}>
+									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+								</td>
 							))}
 						</tr>
 					))}
