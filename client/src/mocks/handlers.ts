@@ -1,6 +1,10 @@
 import { rest } from 'msw';
 
 export const handlers = [
+	rest.get('http://localhost:8080/api/misdemeanours/0', (_req, res, ctx) => {
+		return res(ctx.json({ misdemeanours: [] }));
+	}),
+
 	rest.get('http://localhost:8080/api/misdemeanours/1', (_req, res, ctx) => {
 		return res(
 			ctx.json({
