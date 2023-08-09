@@ -20,13 +20,20 @@ export interface MisdemeanourTableRow extends Misdemeanour {
 	punishment: string;
 }
 
+export enum MISDEMEANOUR_FULL_NAMES {
+	rudeness = 'Mild Public Rudeness',
+	vegetables = 'Not Eating Your Vegetables',
+	lift = 'Speaking in a Lift',
+	united = 'Supporting Manchester United',
+}
+
 export const Misdemeanour_List: React.FC<Misdemeanour_ListProps> = ({ data }) => {
 	const addEmojiAndPunishment = (misdemeanour: Misdemeanour): MisdemeanourTableRow => {
 		return {
 			citizenId: misdemeanour.citizenId,
 			date: misdemeanour.date,
 			misdemeanour: misdemeanour.misdemeanour,
-			misdemeanourWithEmoji: `${misdemeanour.misdemeanour} ${MISDEMEANOUR_EMOJIS[misdemeanour.misdemeanour]}`,
+			misdemeanourWithEmoji: `${MISDEMEANOUR_FULL_NAMES[misdemeanour.misdemeanour]} ${MISDEMEANOUR_EMOJIS[misdemeanour.misdemeanour]}`,
 			punishment: randomPunishment(),
 		};
 	};

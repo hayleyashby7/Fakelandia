@@ -19,7 +19,7 @@ export const Filter_Table: React.FC<Filter_TableProps> = ({ data }) => {
 	const filteredData = filter === '' ? data : data.filter((misdemeanour) => misdemeanour.misdemeanour === filter);
 
 	return (
-		<>
+		<div className='flex flex-col items-center '>
 			<label htmlFor='filter'>Filter by misdemeanour: </label>
 			<select name='filter' value={filter} onChange={handleFilter}>
 				{misdemeanours.map((misdemeanour) => (
@@ -27,7 +27,7 @@ export const Filter_Table: React.FC<Filter_TableProps> = ({ data }) => {
 				))}
 			</select>
 			<Table data={filteredData} />
-		</>
+		</div>
 	);
 };
 
