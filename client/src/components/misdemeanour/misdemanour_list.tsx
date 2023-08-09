@@ -1,22 +1,39 @@
-import { MISDEMEANOUR_EMOJIS, Misdemeanour, MisdemeanourWithEmoji } from '../../types/misdemeanours.types';
+import { Misdemeanour, MisdemeanourKind } from '../../types/misdemeanours.types';
 import Filter_Table from '../table/filter_table';
+import { randomPunishment } from '../../utils/punishments';
 
 interface Misdemeanour_ListProps {
 	data: unknown | undefined;
 }
 
+export enum MISDEMEANOUR_EMOJIS {
+	rudeness = '🤪',
+	vegetables = '🗣',
+	lift = '🥗',
+	united = '😈',
+}
+
+export type MisdemeanourEmoji = (typeof MISDEMEANOUR_EMOJIS)[MisdemeanourKind];
+
+export interface MisdemeanourTableRow extends Misdemeanour {
+	misdemeanourWithEmoji: string;
+	punishment: string;
+}
+
 export const Misdemeanour_List: React.FC<Misdemeanour_ListProps> = ({ data }) => {
-	const addEmoji = (misdemeanour: Misdemeanour): MisdemeanourWithEmoji => {
+	const addEmojiAndPunishment = (misdemeanour: Misdemeanour): MisdemeanourTableRow => {
 		return {
 			citizenId: misdemeanour.citizenId,
 			date: misdemeanour.date,
 			misdemeanour: misdemeanour.misdemeanour,
 			misdemeanourWithEmoji: `${misdemeanour.misdemeanour} ${MISDEMEANOUR_EMOJIS[misdemeanour.misdemeanour]}`,
+			punishment: randomPunishment(),
 		};
 	};
+
 	if (data) {
 		const misdemeanours = Object.entries(data);
-		const list = Object.entries(misdemeanours[0][1]).map(([, item]) => addEmoji(item as Misdemeanour));
+		const list = Object.entries(misdemeanours[0][1]).map(([, item]) => addEmojiAndPunishment(item as Misdemeanour));
 
 		return <Filter_Table data={list} />;
 	} else {
