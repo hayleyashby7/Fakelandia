@@ -24,7 +24,7 @@ test('Router renders confession page', () => {
 
 	//Assert
 	expect(confessionElement).toBeInTheDocument();
-	expect(confessionElement).toHaveTextContent('Confession');
+	expect(confessionElement).toHaveTextContent('confess');
 });
 
 test('Router renders misdemeanor page', async () => {
@@ -53,3 +53,4 @@ test('Router renders not found page', () => {
 	expect(notFoundText).toBeInTheDocument();
 	expect(notFoundText).toHaveTextContent('Sorry, the page you are looking for does not exist.');
 });
+
