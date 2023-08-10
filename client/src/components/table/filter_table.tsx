@@ -20,8 +20,10 @@ export const Filter_Table: React.FC<Filter_TableProps> = ({ data }) => {
 
 	return (
 		<div className='flex flex-col items-center '>
-			<label htmlFor='filter'>Filter by misdemeanour: </label>
-			<select name='filter' value={filter} onChange={handleFilter}>
+			<label id='filterLabel' htmlFor='filter'>
+				Filter by misdemeanour:{' '}
+			</label>
+			<select aria-labelledby='filterLabel' name='filter' value={filter} onChange={handleFilter}>
 				{misdemeanours.map((misdemeanour) => (
 					<option key={misdemeanour}>{misdemeanour}</option>
 				))}
