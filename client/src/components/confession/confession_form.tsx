@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MisdemeanourKind, JustTalk } from '../../types/misdemeanours.types';
+import { Path, useForm, UseFormRegister, SubmitHandler } from 'react-hook-form';
 
 enum REASONS {
 	'just-talk' = 'Just Talk',
@@ -14,48 +15,80 @@ type Reason = (typeof REASONS)[MisdemeanourKind | JustTalk];
 interface ConfessionFormData {
 	subject: string;
 	reason: Reason | null;
-	message: string;
+	details: string;
 }
 
-const ConfessionForm: React.FC = () => {
+interface InputProps {
+	label: string;
+	name: Path<ConfessionFormData>;
+	register: UseFormRegister<ConfessionFormData>;
+	required: boolean;
+}
+
+interface SelectProps extends InputProps {
+	options: Reason[];
+}
+
+interface DetailsProps {
+	name: Path<ConfessionFormData>;
+	register: UseFormRegister<ConfessionFormData>;
+}
+
+const Input = ({ label, name, register, required }: InputProps) => {
+	return (
+		<div className='flex justify-end gap-2'>
+			<label htmlFor={name}>{label}</label>
+			<input className='border' {...register(name, { required })} />
+		</div>
+	);
+};
+
+const Select = ({ label, name, register, required, options }: SelectProps) => {
+	return (
+		<div className='flex justify-end gap-2'>
+			<label htmlFor={name}>{label}</label>
+			<select className='border' {...register(name, { required })}>
+				<option value=''>Select a reason</option>
+				{options.map((option) => (
+					<option key={option} value={option}>
+						{option}
+					</option>
+				))}
+			</select>
+		</div>
+	);
+};
+
+const Details = ({ name, register }: DetailsProps) => {
+	return (
+		<div>
+			<textarea className='border w-full h-20' {...register(name)} />
+		</div>
+	);
+};
+
+const Submit = () => {
+	return (
+		<div className='flex justify-center'>
+			<button className='border w-fit py-2 px-6' type='submit'>
+				Confess
+			</button>
+		</div>
+	);
+};
+
+export const ConfessionForm: React.FC = () => {
 	const [reasons] = useState<Reason[]>(Object.values(REASONS));
-	const [inputs, setInputs] = useState<ConfessionFormData>({ subject: '', reason: null, message: '' });
+	const { register, handleSubmit } = useForm<ConfessionFormData>();
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		console.log(event);
-		console.log(inputs);
-	};
-
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-		setInputs((inputs) => ({ ...inputs, [event.target.name]: event.target.value }));
-	};
+	const onSubmit: SubmitHandler<ConfessionFormData> = (data) => console.log(data);
 
 	return (
-		<form onSubmit={handleSubmit} className='flex flex-col p-2  my-4 gap-4 border-2 border-red rounded-md'>
-			<div className='flex justify-end gap-2'>
-				<label htmlFor='subject'>Subject</label>
-				<input className='border' name='subject' type='text' onChange={handleChange} />
-			</div>
-			<div className='flex justify-end gap-2'>
-				<label htmlFor='reason'>Reason for contact</label>
-				<select className='border' name='reason' onChange={handleChange}>
-					<option value=''>Select a reason</option>
-					{reasons.map((reason) => (
-						<option key={reason} value={reason}>
-							{reason}
-						</option>
-					))}
-				</select>
-			</div>
-			<div>
-				<textarea className='border w-full h-20' name='message' onChange={handleChange} />
-			</div>
-			<div className='flex justify-center'>
-				<button className='border w-fit py-2 px-6' type='submit'>
-					Confess
-				</button>
-			</div>
+		<form onSubmit={handleSubmit(onSubmit)} className='flex flex-col p-2  my-4 gap-4 border-2 border-red rounded-md'>
+			<Input label='Subject' name='subject' register={register} required={true} />
+			<Select label='Reason' name='reason' register={register} required={true} options={reasons} />
+			<Details name='details' register={register} />
+			<Submit />
 		</form>
 	);
 };
