@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { MisdemeanourKind, JustTalk } from '../../types/misdemeanours.types';
 import { Path, useForm, UseFormRegister, SubmitHandler } from 'react-hook-form';
+
 
 enum REASONS {
 	'just-talk' = 'Just Talk',
@@ -12,7 +12,11 @@ enum REASONS {
 
 type Reason = (typeof REASONS)[MisdemeanourKind | JustTalk];
 
-interface ConfessionFormData {
+interface ConfessionFormProps {
+	onSubmission: (data: ConfessionFormData) => void;
+}
+
+export interface ConfessionFormData {
 	subject: string;
 	reason: Reason | null;
 	details: string;
@@ -27,10 +31,6 @@ interface InputProps extends DetailsProps {
 	label: string;
 }
 
-interface SelectProps extends InputProps {
-	options: Reason[];
-}
-
 const Input = ({ label, name, register, required }: InputProps) => {
 	return (
 		<div className='flex justify-end gap-2'>
@@ -40,15 +40,15 @@ const Input = ({ label, name, register, required }: InputProps) => {
 	);
 };
 
-const Select = ({ label, name, register, required, options }: SelectProps) => {
+const Select = ({ label, name, register, required }: InputProps) => {
 	return (
 		<div className='flex justify-end gap-2'>
 			<label htmlFor={name}>{label}</label>
 			<select id='reason' className='border' {...register(name, { required })}>
 				<option value=''>Select a reason</option>
-				{options.map((option) => (
-					<option key={option} value={option}>
-						{option}
+				{Object.entries(REASONS).map(([key, value]) => (
+					<option key={key} value={key}>
+						{value}
 					</option>
 				))}
 			</select>
@@ -74,21 +74,20 @@ const Submit = () => {
 	);
 };
 
-export const ConfessionForm: React.FC = () => {
-	const [reasons] = useState<Reason[]>(Object.values(REASONS));
+export const ConfessionForm: React.FC<ConfessionFormProps> = ({ onSubmission }) => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<ConfessionFormData>();
 
-	const onSubmit: SubmitHandler<ConfessionFormData> = (data) => console.log(data);
+	const onSubmit: SubmitHandler<ConfessionFormData> = async (data) => onSubmission(data);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className='flex flex-col p-2  my-4 gap-4 border-2 border-red rounded-md'>
 			<Input label='Subject' name='subject' register={register} required={true} />
 			{errors.subject && <span className='text-red text-right'>A subject is required</span>}
-			<Select label='Reason' name='reason' register={register} required={true} options={reasons} />
+			<Select label='Reason' name='reason' register={register} required={true} />
 			{errors.reason && <span className='text-red text-right'>A reason is required</span>}
 			<Details name='details' register={register} required={true} />
 			{errors.details && <span className='text-red text-right'>Details should have at least 3 characters.</span>}

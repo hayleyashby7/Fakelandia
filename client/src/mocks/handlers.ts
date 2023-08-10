@@ -18,6 +18,7 @@ export const handlers = [
 			})
 		);
 	}),
+
 	rest.get('http://localhost:8080/api/misdemeanours/50', (_req, res, ctx) => {
 		return res(
 			ctx.json({
@@ -273,6 +274,46 @@ export const handlers = [
 						date: '30/07/2023',
 					},
 				],
+			})
+		);
+	}),
+
+	rest.post('http://localhost:8080/api/confess', async (req, res, ctx) => {
+		const justTalkJson = {
+			subject: 'test subject',
+			details: 'test details',
+			reason: 'just-talk',
+		};
+
+		const bodyJson = req.text();
+
+		if (!req.json) {
+			return res(
+				ctx.status(400),
+				ctx.json({
+					success: false,
+					message: 'No body provided',
+				})
+			);
+		}
+
+		if (await bodyJson !== JSON.stringify(justTalkJson)) {
+			return res(
+				ctx.status(200),
+				ctx.json({
+					success: true,
+					justTalked: true,
+					message: 'Thanks for talking to us.',
+				})
+			);
+		}
+
+		return res(
+			ctx.status(200),
+			ctx.json({
+				success: true,
+				justTalked: true,
+				message: 'Confessed',
 			})
 		);
 	}),
